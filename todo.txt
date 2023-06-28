@@ -1,0 +1,6 @@
+Add different Fractal classes and abstract Fractal class
+Plan out and provide access to maraming color palettes
+Paint image to screen
+Make it all command line accessible
+Ability to zoom in and out
+Highlight a section to zoom in
