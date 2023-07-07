@@ -17,4 +17,6 @@ public class Complex {
     public double magnitude() {
         return real * real + imaginary * imaginary;
     }
+
+    public double abs() { return Math.sqrt(real * real + imaginary * imaginary); }
 }

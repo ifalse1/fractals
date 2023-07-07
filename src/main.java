@@ -1,35 +1,34 @@
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-public class main extends JPanel {
-
-    public void paint(Graphics g) {
-        Image img = createImageWithText();
-        g.drawImage(img, 0,0,this);
-    }
-
-    private Image createImageWithText() {
-        BufferedImage bufferedImage = new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
-        //Graphics g = bufferedImage.getGraphics();
-        bufferedImage.setRGB(150,150, Color.RED.getRGB());
-
-        return bufferedImage;
-    }
+public class main {
 
     public static void main(String[] args) {
-        for (String s : args) {
-            System.out.println(s);
+        try {
+            Dictionary<String, String> fractal = new Hashtable<>();
+            File f = new File(args[0]);
+            Scanner myReader = new Scanner(f);
+            while (myReader.hasNextLine()) {
+                String temp = myReader.nextLine();
+                String first = String.valueOf(temp.charAt(0));
+                if (!first.equals("#")) {
+                    if (temp.split(":").length == 2) {
+                        String[] tempSplit = temp.split(":");
+                        fractal.put(tempSplit[0].strip().toLowerCase(), tempSplit[1].strip().toLowerCase());
+                    }
+                }
+            }
+            CreateFrame frame = new CreateFrame(fractal);
+            frame.initializeFrame(fractal);
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not fine the file");
+            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Input a file");
+            e.printStackTrace();
         }
-
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(new main());
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
-        frame.setResizable(false);
-        frame.setVisible(true);
     }
 }

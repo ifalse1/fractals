@@ -1,10 +1,12 @@
+import java.util.Dictionary;
+
 import static java.lang.Math.abs;
 
 public class Julia extends Fractal{
-    private int iteration;
     private Complex c;
-    public Julia(int iteration) {
-        this.iteration = iteration;
+    public Julia(Dictionary fracInfo) {
+        Fractal.iteration = (int) fracInfo.get("iteration");
+        c = new Complex((Double) fracInfo.get("creal"), (Double) fracInfo.get("cimag"));
     }
     @Override
     int count(Complex z) {
