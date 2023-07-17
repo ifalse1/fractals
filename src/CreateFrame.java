@@ -25,14 +25,19 @@ public class CreateFrame extends JPanel {
     private Image createImageWithText() {
         BufferedImage bufferedImage = new BufferedImage(Integer.parseInt(fracInfo.get("pixels")), Integer.parseInt(fracInfo.get("pixels")), BufferedImage.TYPE_INT_RGB);
         //Graphics g = bufferedImage.getGraphics();
-        Mandelbrot mandel = new Mandelbrot(Integer.parseInt(fracInfo.get("iterations")));
+        Fractal frac;
+        if (fracInfo.get("type") == "mandelbrot" ) {
+            frac = new Mandelbrot(Integer.parseInt(fracInfo.get("iterations")));
+        } else {
+            frac = new Julia(fracInfo);
+        }
 
         for (int row = size; row > 0; row--) {
             for (int col = 0; col < size; col++) {
                 Double x = min + col * pixel_size;
                 Double y = (Double.valueOf(fracInfo.get("centery")) - Double.valueOf(fracInfo.get("axislength")) / 2) + row * pixel_size;
                 Complex c = new Complex(x, y);
-                Color color = Color.getHSBColor((float) mandel.count(c) / 255, 1.0f, 1.0f);
+                Color color = Color.getHSBColor((float) frac.count(c) / 255, 1.0f, 1.0f);
                 //System.out.println(mandel.count(c));
                 bufferedImage.setRGB(col, size - row, color.getRGB());
             }
